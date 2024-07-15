@@ -12,7 +12,7 @@ const todoData = [];
 submitButtonDOM.addEventListener('click', e => {
     e.preventDefault();
 
-    if (textInputDOM.value.length === 0) {
+    if (!isValidText(textInputDOM.value)) {
         return;
     }
 
@@ -72,7 +72,12 @@ function renderTaskList() {
         const updateDOM = buttonsDOM[0];
         updateDOM.addEventListener('click', event => {
             event.preventDefault();
-            todoData[i] = updateInputDOM.value;
+
+            if (!isValidText(updateInputDOM.value)) {
+                return;
+            }
+
+            todoData[i].text = updateInputDOM.value;
             renderTaskList();
         });
 
@@ -125,6 +130,16 @@ function formatTime(timeInMs) {
     // return `${date[3]}-MM-${date[2]} ${date[4]}`;
     return `${year}-${month}-${day} ${hour}:${minute}:${second}`
 
+}
+
+function isValidText(text) {
+    if (typeof text !== 'string'
+        || text.trim() === ''
+        || text[0] !== text[0].toUpperCase()
+    ) {
+        return false;
+    }
+    return true;
 }
 
 // CRUD operations:
