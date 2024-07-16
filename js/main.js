@@ -7,12 +7,23 @@ const textInputDOM = formDOM.querySelector('input');
 const submitButtonDOM = formDOM.querySelector('button');
 const listDOM = document.querySelector('.list');
 
+const toastDOM = document.querySelector('.toast');
+const toastTitleDOM = toastDOM.querySelector('.title');
+const toastMessageDOM = toastDOM.querySelector('.message');
+const toastCloseDOM = toastDOM.querySelector('.close');
+
+toastCloseDOM.addEventListener('click', () => {
+    toastDOM.classList.remove('active');
+});
+
 const todoData = [];
 
 submitButtonDOM.addEventListener('click', e => {
     e.preventDefault();
 
-    if (!isValidText(textInputDOM.value)) {
+    const validationMSG = isValidText(textInputDOM.value);
+    if (validationMSG !== true) {
+        showToastError(validationMSG);
         return;
     }
 
@@ -21,6 +32,7 @@ submitButtonDOM.addEventListener('click', e => {
         createdAt: Date.now(),
     });
     renderList();
+    showToastSuccess('Successfully created')
 });
 
 function renderList() {
@@ -73,17 +85,21 @@ function renderTaskList() {
         updateDOM.addEventListener('click', event => {
             event.preventDefault();
 
-            if (!isValidText(updateInputDOM.value)) {
+            const validationMSG = isValidText(updateInputDOM.value)
+            if (validationMSG !== true) {
+                showToastError(validationMSG)
                 return;
             }
 
             todoData[i].text = updateInputDOM.value;
             renderTaskList();
+            showToastSuccess('Message successfully updated');
         });
 
         const cancelDOM = buttonsDOM[1];
         cancelDOM.addEventListener('click', () => {
             articleEditFormDOM.classList.add('hidden');
+            showToastInfo('Message edit canceled');
         });
 
         const editDOM = buttonsDOM[3];
@@ -95,6 +111,7 @@ function renderTaskList() {
         deleteDOM.addEventListener('click', () => {
             todoData.splice(i, 1);
             renderList();
+            showToastSuccess('Message successfully deleted');
         });
     }
 }
@@ -133,13 +150,44 @@ function formatTime(timeInMs) {
 }
 
 function isValidText(text) {
-    if (typeof text !== 'string'
-        || text.trim() === ''
-        || text[0] !== text[0].toUpperCase()
-    ) {
-        return false;
+    if (typeof text !== 'string') {
+        return 'Text must be string';
+    }
+    if (text.trim() === '') {
+        return 'Text cannot be empty';
+    }
+    if (text[0] !== text[0].toUpperCase()) {
+        return 'Text must start with uppercase';
     }
     return true;
+}
+
+function showToastSuccess(msg) {
+    toastDOM.classList.add('active');
+    toastDOM.dataset.state = 'success';
+    toastTitleDOM.textContent = 'Success';
+    toastMessageDOM.textContent = msg;
+}
+
+function showToastInfo(msg) {
+    toastDOM.classList.add('active');
+    toastDOM.dataset.state = 'info';
+    toastTitleDOM.textContent = 'Info';
+    toastMessageDOM.textContent = msg;
+}
+
+function showToastWarning(msg) {
+    toastDOM.classList.add('active');
+    toastDOM.dataset.state = 'warning';
+    toastTitleDOM.textContent = 'Warning';
+    toastMessageDOM.textContent = msg;
+}
+
+function showToastError(msg) {
+    toastDOM.classList.add('active');
+    toastDOM.dataset.state = 'error';
+    toastTitleDOM.textContent = 'Error';
+    toastMessageDOM.textContent = msg;
 }
 
 // CRUD operations:

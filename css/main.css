@@ -86,6 +86,7 @@ form>button {
     max-width: 24rem;
     border: 1px solid #ccc;
     box-shadow: 0 0.1rem 0.2rem #0033;
+    background-color: #fff;
 }
 
 .toast.active{
@@ -137,6 +138,9 @@ form>button {
 }
 .toast[data-state='error']>.text>.title {
     color: red;
+}
+.toast[data-state='']>.text> .icon {
+    display: none;
 }
 
 .toast > .close {
