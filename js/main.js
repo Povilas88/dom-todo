@@ -162,32 +162,27 @@ function isValidText(text) {
     return true;
 }
 
-function showToastSuccess(msg) {
+function showToast(state, title, msg) {
     toastDOM.classList.add('active');
-    toastDOM.dataset.state = 'success';
-    toastTitleDOM.textContent = 'Success';
+    toastDOM.dataset.state = state;
+    toastTitleDOM.textContent = title;
     toastMessageDOM.textContent = msg;
+}
+
+function showToastSuccess(msg) {
+    showToast('success', 'Success', msg)
 }
 
 function showToastInfo(msg) {
-    toastDOM.classList.add('active');
-    toastDOM.dataset.state = 'info';
-    toastTitleDOM.textContent = 'Info';
-    toastMessageDOM.textContent = msg;
+    showToast('info', 'Info', msg)
 }
 
 function showToastWarning(msg) {
-    toastDOM.classList.add('active');
-    toastDOM.dataset.state = 'warning';
-    toastTitleDOM.textContent = 'Warning';
-    toastMessageDOM.textContent = msg;
+    showToast('wrning', 'Warning', msg)
 }
 
 function showToastError(msg) {
-    toastDOM.classList.add('active');
-    toastDOM.dataset.state = 'error';
-    toastTitleDOM.textContent = 'Error';
-    toastMessageDOM.textContent = msg;
+    showToast('error', 'Error', msg)
 }
 
 // CRUD operations:
