@@ -31,6 +31,7 @@ submitButtonDOM.addEventListener('click', e => {
     }
 
     todoData.push({
+        state: 'done',
         text: textInputDOM.value,
         createdAt: Date.now(),
     });
@@ -120,13 +121,7 @@ function renderTaskList() {
     }
 }
 
-let date = new Date();
-let year = date.getFullYear();
-let month = (date.getMonth() < 9 ? '0' : '') + (date.getMonth() + 1);//grazina index +1
-let day = (date.getDate() < 10 ? '0' : '') + date.getDate();;
-let hour = date.getHours();
-let minute = date.getMinutes();
-let second = date.getSeconds();
+
 
 const d = new Date('2000-01-01 1:2:3')// date konstravimas 0100<YYYY
 const months = ['Sausis', 'Vasaris']
@@ -142,14 +137,19 @@ console.log(d.getMonth(), months[d.getMonth()]);
 // 06 - 4
 // 07 - 5
 
-date = date.toString().split(' ');
-
 function formatTime(timeInMs) {
     // mdn: js Date -> getYear, getMonth, getDay, getHour...
-
+    const date = new Date(timeInMs);
+    const year = date.getFullYear();
+    const month = (date.getMonth() < 9 ? '0' : '') + (date.getMonth() + 1);//grazina index +1
+    const day = (date.getDate() < 10 ? '0' : '') + date.getDate();;
+    const hour = date.getHours();
+    const minute = date.getMinutes();
+    const second = date.getSeconds();
+    // date = date.toString().split(' ');
     // return `YYYY-MM-DD HH:MM:SS`;
     // return `${date[3]}-MM-${date[2]} ${date[4]}`;
-    return `${year}-${month}-${day} ${hour}:${minute}:${second}`
+    return `${year}-${month}-${day} ${hour}:${minute}:${second}`;
 
 }
 
