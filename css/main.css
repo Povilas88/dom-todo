@@ -24,12 +24,39 @@ form {
     width: 100%;
 }
 
-form>input,
-form>button {
-    padding: 0.3em 0.5em;
+form > input,
+form > button {
+    min-height: 3rem;
+    width: 100%;
+    padding: 0.3rem 0.5rem;
     font-size: 2rem;
+    line-height: 2rem;   
 }
 
+/* ------------------------------- */
+
+.list-actions {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.list-actions .title {
+    font-weight: bold;
+}
+
+.list-actions button {
+    font-size: 1.1rem;
+    padding: 0.2rem 0.5rem;
+}
+
+.list-actions button.active {
+    background-color: #36f;
+    color: #fff;
+}
+
+/* ------------------------------- */
 .list {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -51,6 +78,25 @@ form>button {
     gap: 1rem;
     padding: 1rem;
     border: 1px solid #ccc;
+    position: relative;
+    border-left: 0.5rem solid #000;
+}
+.list>.item[data-state='done'] {
+    background-color: #ccc;
+}
+
+.list .state {
+    display: none;
+    padding: 0.3em 0.5em;
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: green;
+    color: #fff;
+}
+
+.list .item[data-state='done'] .state {
+    display: block;
 }
 
 .list .text {
